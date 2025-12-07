@@ -1,0 +1,71 @@
+<?xml version='1.0'?>
+<robot name="robotic_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+    <mu1 value ="0.2"/>
+    <mu2 value = "0.2"/>
+  </gazebo>
+
+  <gazebo reference="platform">
+    <material>Gazebo/Orange</material>
+    <mu1 value ="0.2"/>
+    <mu2 value = "0.2"/>
+  </gazebo>
+
+  <gazebo reference="mid_link">
+    <material>Gazebo/Yellow</material>
+    <gravity>false</gravity>
+    <mu1 value ="0.2"/>
+    <mu2 value = "0.2"/>
+  </gazebo>
+
+
+  <gazebo reference="top_link">
+    <material>Gazebo/Red</material>
+    <gravity>false</gravity>
+    <mu1 value ="0.2"/>
+    <mu2 value = "0.2"/>
+  </gazebo>
+
+  <gazebo reference="left_gripper_link">
+    <material>Gazebo/Black</material>
+    <mu1 value ="0.2"/>
+    <mu2 value = "0.2"/>
+  </gazebo>
+
+
+  <gazebo reference="right_gripper_link">
+    <material>Gazebo/Black</material>
+    <mu1 value ="0.2"/>
+    <mu2 value = "0.2"/>
+  </gazebo>
+
+
+    <!-- ROS 2 Control -->
+  <ros2_control name="robot_arm_control" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin> 
+    </hardware>
+
+    <joint name="base_to_mid_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <joint name="mid_to_top_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+
+  </ros2_control>
+
+ <!-- Gazebo Plugins -->
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+        <parameters>$(find ros2_robotic_arm)/config/robot_controller.yaml</parameters>
+    </plugin>	
+  </gazebo>
+
+</robot>
